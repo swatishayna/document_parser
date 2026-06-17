@@ -1,2 +1,6 @@
 document_portal.egg-info/
 .env
+logs/
+__pycache__/
+*.pyc
+test.py
