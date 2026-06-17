@@ -4,12 +4,12 @@ from datetime import datetime
 
 
 class CustomLogger:
-    def __init__(self, logs_dir = "logs"):
-        self.logs_dir = os.path.join(os.getcwd(), logs_dir)
+    def __init__(self, logs_dir_name = "logs"):
+        self.logs_dir = os.path.join(os.getcwd(), logs_dir_name)
         os.makedirs(self.logs_dir, exist_ok=True)
         
         log_file = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
-        log_file_path = os.path.join(logs_dir, log_file)
+        log_file_path = os.path.join(self.logs_dir, log_file)
 
         logging.basicConfig(
             filename=log_file_path,
@@ -17,13 +17,14 @@ class CustomLogger:
             level=logging.INFO,
         )
         
-    def get_logger(Self, name = __file__):
+    def get_logger(self, name = __file__):
         return logging.getLogger(os.path.basename(name))
     
     
     
-if __name__ == "main":
-    logger = CustomLogger()
-    logger = logger.get_logger(__file__)
+if __name__ == "__main__":
+    logger_obj = CustomLogger()
+    logger = logger_obj.get_logger(__file__)
     logger.info("Custom Logger Initialised")
+    logging.shutdown()
     
