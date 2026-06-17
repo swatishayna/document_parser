@@ -4,8 +4,7 @@ from datetime import datetime
 
 
 class CustomLogger:
-    def __init__(self):
-        logs_dir=os.path.join(os.getcwd(),"logs")
+    def __init__(self, logs_dir = "logs"):
         self.logs_dir = os.path.join(os.getcwd(), logs_dir)
         os.makedirs(self.logs_dir, exist_ok=True)
         
@@ -20,3 +19,11 @@ class CustomLogger:
         
     def get_logger(Self, name = __file__):
         return logging.getLogger(os.path.basename(name))
+    
+    
+    
+if __name__ == "main":
+    logger = CustomLogger()
+    logger = logger.get_logger(__file__)
+    logger.info("Custom Logger Initialised")
+    
