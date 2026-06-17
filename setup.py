@@ -8,3 +8,6 @@ setup(
     
     
 )
+
+
+#pip install -e . this will create a package of this setup.py in the activated env
