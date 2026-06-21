@@ -2,6 +2,10 @@ import sys
 import traceback
 from typing import Optional, cast
 
+# import sys
+# sys.exc_info()
+# Output: (None, None, None)
+
 class DocumentPortalException(Exception):
     def __init__(self, error_message, error_details: Optional[object] = None):
         # Normalize message
