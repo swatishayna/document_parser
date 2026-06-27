@@ -11,15 +11,18 @@ import fitz  # PyMuPDF #type: ignore
 from langchain.schema import Document #type: ignore
 from langchain_text_splitters import RecursiveCharacterTextSplitter #type: ignore
 from langchain_community.vectorstores import FAISS #type: ignore
+
 from utils.model_loader import ModelLoader
 from logger import GLOBAL_LOGGER as log
 from exception.custom_exception import DocumentPortalException
 from utils.file_io import generate_session_id, save_uploaded_files 
 from utils.document_ops import load_documents, concat_for_analysis, concat_for_comparison
 
+
+
 SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".txt"}
 
-# FAISS Manager (load-or-create)
+
 class FaissManager:
     def __init__(self, index_dir: Path, model_loader: Optional[ModelLoader] = None):
         self.index_dir = Path(index_dir)
@@ -52,7 +55,6 @@ class FaissManager:
     
     def _save_meta(self):
         self.meta_path.write_text(json.dumps(self._meta, ensure_ascii=False, indent=2), encoding="utf-8")
-        
         
     def add_documents(self,docs: List[Document]):
         
@@ -120,8 +122,7 @@ class ChatIngestor:
         except Exception as e:
             log.error("Failed to initialize ChatIngestor", error=str(e))
             raise DocumentPortalException("Initialization error in ChatIngestor", e) from e
-            
-        
+                
     def _resolve_dir(self, base: Path):
         if self.use_session:
             d = base / self.session_id # e.g. "faiss_index/abc123"
@@ -169,9 +170,7 @@ class ChatIngestor:
             log.error("Failed to build retriever", error=str(e))
             raise DocumentPortalException("Failed to build retriever", e) from e
 
-            
-        
-            
+                       
 class DocHandler:
     """
     PDF save + read (page-wise) for analysis.
@@ -213,6 +212,8 @@ class DocHandler:
         except Exception as e:
             log.error("Failed to read PDF", error=str(e), pdf_path=pdf_path, session_id=self.session_id)
             raise DocumentPortalException(f"Could not process PDF: {pdf_path}", e) from e
+
+
 class DocumentComparator:
     """
     Save, read & combine PDFs for comparison with session-based versioning.
