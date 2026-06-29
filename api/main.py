@@ -1,10 +1,10 @@
 import os
 from typing import List, Optional, Any, Dict
-from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request
-from fastapi.responses import JSONResponse, HTMLResponse
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, UploadFile, File, Form, HTTPException, Request #type: ignore
+from fastapi.responses import JSONResponse, HTMLResponse #type: ignore
+from fastapi.middleware.cors import CORSMiddleware #type: ignore
+from fastapi.staticfiles import StaticFiles #type: ignore
+from fastapi.templating import Jinja2Templates #type: ignore
 from pathlib import Path
 
 from src.document_ingestion.data_ingestion import (
@@ -12,7 +12,7 @@ from src.document_ingestion.data_ingestion import (
     DocumentComparator,
     ChatIngestor,
 )
-from src.document_analyzer.data_analysis import DocumentAnalyzer
+from src.document_analyser.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparator import DocumentComparatorLLM
 from src.document_chat.retrieval import ConversationalRAG
 from utils.document_ops import FastAPIFileAdapter,read_pdf_via_handler
@@ -64,7 +64,7 @@ async def analyze_document(file: UploadFile = File(...)) -> Any:
         raise
     except Exception as e:
         log.exception("Error during document analysis")
-        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}")
+        raise HTTPException(status_code=500, detail=f"Analysis failed: {e}") #internal server error
 
 # ---------- COMPARE ----------
 @app.post("/compare")
